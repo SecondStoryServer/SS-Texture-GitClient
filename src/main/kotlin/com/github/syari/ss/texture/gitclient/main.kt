@@ -1,5 +1,11 @@
 package com.github.syari.ss.texture.gitclient
 
+import java.io.File
+
 fun main() {
-    println(TextureProjects.projects.joinToString("\n") { it.directory.absolutePath })
+    updateOrInit()
+}
+
+fun updateOrInit() {
+    GitClient.update()
 }

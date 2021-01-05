@@ -5,7 +5,7 @@ import java.io.File
 import java.io.FileFilter
 
 object TextureProjects {
-    private val directory = File(".")
+    val directory = File(".")
 
     val projects = directory.listFiles(FileFilter { it.isTexture() })?.map { Texture(it) }.orEmpty()
 }
