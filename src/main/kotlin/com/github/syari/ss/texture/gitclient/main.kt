@@ -1,5 +1,5 @@
 package com.github.syari.ss.texture.gitclient
 
 fun main() {
-    println("Hello")
+    println(TextureProjects.projects.joinToString("\n") { it.directory.absolutePath })
 }
