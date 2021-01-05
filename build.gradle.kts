@@ -26,7 +26,7 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<ShadowJar> {
     classifier = null
-    destinationDirectory.set(file("jars"))
+    destinationDirectory.set(file("../"))
 }
 
 application {
