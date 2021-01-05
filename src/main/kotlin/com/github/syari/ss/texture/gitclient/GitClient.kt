@@ -4,7 +4,6 @@ import org.eclipse.jgit.api.Git
 import java.io.File
 
 object GitClient {
-    private const val ProjectName = "SS-Texture-GitClient"
     private const val JarFileName = "$ProjectName.jar"
     private const val JarFilePath = "jars/$JarFileName"
 
