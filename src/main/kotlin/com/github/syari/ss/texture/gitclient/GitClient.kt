@@ -20,6 +20,7 @@ object GitClient {
     }
 
     private fun updateSubModule() {
+        git.submoduleInit().call()
         git.submoduleUpdate().setFetch(true).call()
     }
 
