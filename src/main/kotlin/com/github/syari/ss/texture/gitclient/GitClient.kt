@@ -21,7 +21,7 @@ object GitClient {
     }
 
     private fun updateSubModule() {
-        git.submoduleUpdate().call()
+        git.submoduleUpdate().setFetch(true).call()
     }
 
     private fun copyJar() {
