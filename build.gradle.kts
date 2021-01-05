@@ -17,6 +17,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.eclipse.jgit:org.eclipse.jgit:5.10.0.202012080955-r")
+    implementation("org.slf4j:slf4j-log4j12:1.7.21")
 }
 
 tasks.withType<KotlinCompile> {
