@@ -4,7 +4,8 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 15
+const val Version = 16
+const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {

@@ -2,11 +2,14 @@ package com.github.syari.ss.texture.gitclient
 
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.UserConfig
+import org.eclipse.jgit.transport.URIish
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
 
 object GitClient {
-    val git: Git = Git.init().setDirectory(TextureProjects.directory).call()
+    val git: Git = Git.init().setDirectory(TextureProjects.directory).call().apply {
+        remoteAdd().setName("origin").setUri(URIish(RemoteURL)).call()
+    }
 
     fun add(file: File) {
         git.add().addFilepattern(file.path.removePrefix("./")).call()
