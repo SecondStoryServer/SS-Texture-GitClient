@@ -6,7 +6,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
 
 object GitClient {
-    val git: Git = Git.open(TextureProjects.directory)
+    val git: Git = Git.init().setDirectory(TextureProjects.directory).call()
 
     fun add(file: File) {
         git.add().addFilepattern(file.path.removePrefix("./")).call()
