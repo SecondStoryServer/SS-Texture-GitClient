@@ -2,7 +2,6 @@ package com.github.syari.ss.texture.gitclient
 
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.Constants
-import java.io.File
 
 object GitClient {
     private val git = Git.open(TextureProjects.directory)
@@ -12,6 +11,41 @@ object GitClient {
         class NoChange(message: String): UpdateResult(message)
         class Conflict(message: String): UpdateResult(message)
         class FailPull(message: String): UpdateResult(message)
+    }
+
+    fun printStatus() {
+        val status = git.status().call()
+
+        status.conflicting.forEach {
+            println("Conflicting: $it")
+        }
+        status.added.forEach {
+            println("Added: $it")
+        }
+        status.changed.forEach {
+            println("Change: $it")
+        }
+        status.missing.forEach {
+            println("Missing: $it")
+        }
+        status.modified.forEach {
+            println("Modification: $it")
+        }
+        status.removed.forEach {
+            println("Removed: $it")
+        }
+        status.uncommittedChanges.forEach {
+            println("Uncommitted: $it")
+        }
+        status.untracked.forEach {
+            println("Untracked: $it")
+        }
+        status.untrackedFolders.forEach {
+            println("Untracked Folder: $it")
+        }
+        status.conflictingStageState.entries.forEach {
+            println("ConflictingState: $it")
+        }
     }
 
     fun update(): UpdateResult {
