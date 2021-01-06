@@ -21,7 +21,7 @@ class Texture(val directory: File) {
     val name: String = directory.name
 
     fun addToGit() {
-        GitClient.addDirectory(directory)
+        GitClient.add(directory)
     }
 
     fun getChangeList(): ChangeList {
@@ -34,7 +34,7 @@ class Texture(val directory: File) {
         }
     }
 
-    fun makeZip() {
-        zipFiles(directory, getZipOutput(this))
+    fun makeZip() = getZipOutput(this).apply {
+        zipFiles(directory, this)
     }
 }

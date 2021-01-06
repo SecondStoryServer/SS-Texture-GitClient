@@ -29,7 +29,7 @@ fun main() {
         changeList.pairModelTexture.forEach {
             println("- ${it.json.status} ${it.json.file} / ${it.png.status} ${it.png.file}")
         }
-        GitClient.addDirectory(Texture.zipsFolder)
+        GitClient.add(texture.makeZip())
         print("Commit Message: ")
         val commitMessage = readLine()
         if (commitMessage.isNullOrEmpty()) {

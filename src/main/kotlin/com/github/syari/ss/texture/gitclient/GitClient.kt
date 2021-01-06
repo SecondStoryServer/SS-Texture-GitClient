@@ -8,8 +8,8 @@ import java.io.File
 object GitClient {
     val git: Git = Git.open(TextureProjects.directory)
 
-    fun addDirectory(directory: File) {
-        git.add().addFilepattern(directory.name).call()
+    fun add(file: File) {
+        git.add().addFilepattern(file.path.removePrefix("./")).call()
     }
 
     fun update() = git.update()
