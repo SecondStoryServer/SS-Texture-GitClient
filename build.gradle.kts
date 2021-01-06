@@ -25,6 +25,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<ShadowJar> {
+    baseName = "git"
     classifier = null
     destinationDirectory.set(file("../"))
 }
