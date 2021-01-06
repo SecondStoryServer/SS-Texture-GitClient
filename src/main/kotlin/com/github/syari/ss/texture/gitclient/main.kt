@@ -4,7 +4,7 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 13
+const val Version = 14
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
@@ -30,7 +30,12 @@ fun main() {
         }
         GitClient.addDirectory(Texture.zipsFolder)
         print("Commit Message: ")
-        val commitMessage = readLine() ?: return Logger.warning("Failure Commit: No Commit Message")
+        val commitMessage = readLine()
+        if (commitMessage.isNullOrEmpty()) {
+            Logger.info("Ignore Project")
+            GitClient.clearChangeList(texture)
+            return@forEach
+        }
         val user = GitClient.getUserConfig()
         print("Author Name: (${user.authorName})")
         val authorName = readLine()?.ifBlank { null } ?: user.authorName

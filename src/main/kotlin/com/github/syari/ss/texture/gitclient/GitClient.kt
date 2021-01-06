@@ -17,6 +17,10 @@ object GitClient {
         git.reset().call()
     }
 
+    fun clearChangeList(texture: Texture) {
+        git.reset().addPath(texture.name).call()
+    }
+
     fun getUserConfig(): UserConfig = git.repository.config.get(UserConfig.KEY)
 
     fun commit(message: String, authorName: String, authorEmail: String) {
