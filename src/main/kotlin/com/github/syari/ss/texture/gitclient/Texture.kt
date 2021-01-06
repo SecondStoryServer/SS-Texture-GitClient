@@ -18,8 +18,20 @@ class Texture(val directory: File) {
         fun File.isTexture() = isDirectory && File(this, PackMcMeta).exists()
     }
 
+    val name: String = directory.name
+
     fun addToGit() {
         GitClient.addDirectory(directory)
+    }
+
+    fun getChangeList(): ChangeList {
+        val status = GitClient.git.status().call()
+        return ChangeList.build {
+            add(Status.Add, status.added)
+            add(Status.Change, status.changed)
+            add(Status.Remove, status.removed)
+            sort()
+        }
     }
 
     fun makeZip() {

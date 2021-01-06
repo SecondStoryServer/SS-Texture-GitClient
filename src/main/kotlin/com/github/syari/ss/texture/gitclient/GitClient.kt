@@ -5,13 +5,11 @@ import org.eclipse.jgit.lib.UserConfig
 import java.io.File
 
 object GitClient {
-    private val git = Git.open(TextureProjects.directory)
+    val git: Git = Git.open(TextureProjects.directory)
 
     fun addDirectory(directory: File) {
         git.add().addFilepattern(directory.name).call()
     }
-
-    fun getChangeLists(): Map<String, ChangeLists> = git.getChangeLists()
 
     fun update() = git.update()
 
