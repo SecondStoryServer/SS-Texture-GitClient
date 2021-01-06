@@ -10,6 +10,7 @@ val Logger: Logger = getLogger(ProjectName)
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
     updateOrInit()
+    TextureProjects.projects.forEach(Texture::addToGit)
     TextureProjects.projects.forEach(Texture::makeZip)
     GitClient.printStatus()
 }

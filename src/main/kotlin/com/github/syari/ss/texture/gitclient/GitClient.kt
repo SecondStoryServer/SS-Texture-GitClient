@@ -6,6 +6,10 @@ import org.eclipse.jgit.lib.Constants
 object GitClient {
     private val git = Git.open(TextureProjects.directory)
 
+    fun addDirectory(directory: File) {
+        git.add().addFilepattern(directory.name).call()
+    }
+
     sealed class UpdateResult(val message: String) {
         class Success(message: String): UpdateResult(message)
         class NoChange(message: String): UpdateResult(message)

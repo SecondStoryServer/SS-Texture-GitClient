@@ -18,6 +18,10 @@ class Texture(val directory: File) {
         fun File.isTexture() = isDirectory && File(this, PackMcMeta).exists()
     }
 
+    fun addToGit() {
+        GitClient.addDirectory(directory)
+    }
+
     fun makeZip() {
         zipFiles(directory, getZipOutput(this))
     }
