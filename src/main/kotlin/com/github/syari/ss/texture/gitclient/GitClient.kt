@@ -13,6 +13,10 @@ object GitClient {
 
     fun update() = git.update()
 
+    fun clearChangeList() {
+        git.reset().call()
+    }
+
     fun getUserConfig(): UserConfig = git.repository.config.get(UserConfig.KEY)
 
     fun commit(message: String, authorName: String, authorEmail: String) {
