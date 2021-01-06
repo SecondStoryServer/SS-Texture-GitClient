@@ -18,10 +18,18 @@ private fun ZipOutputStream.addFiles(files: Array<File>, parent: String = "") {
         if (file.isFile) {
             FileInputStream(file).use { inputStream ->
                 putNextEntry(ZipEntry(path))
-                val buffer = ByteArray(1024)
-                var len: Int
-                while (inputStream.read(buffer).also { len = it } > 0) {
-                    write(buffer, 0, len)
+                if (file.extension.equals("json", true)) {
+                    inputStream.bufferedReader().forEachLine {
+                        val line = it.replace("\\s+".toRegex(), "").replace("\\n|\\r", "")
+                        val byteArray = line.toByteArray()
+                        write(byteArray, 0, byteArray.size)
+                    }
+                } else {
+                    val buffer = ByteArray(1024)
+                    var len: Int
+                    while (inputStream.read(buffer).also { len = it } > 0) {
+                        write(buffer, 0, len)
+                    }
                 }
             }
         } else {
