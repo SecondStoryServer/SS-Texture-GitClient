@@ -4,12 +4,13 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 3
+const val Version = 4
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
     updateOrInit()
+    TextureProjects.projects.forEach(Texture::makeZip)
 }
 
 fun updateOrInit() {
