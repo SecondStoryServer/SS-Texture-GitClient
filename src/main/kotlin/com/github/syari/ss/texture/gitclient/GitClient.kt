@@ -10,19 +10,7 @@ object GitClient {
         git.add().addFilepattern(directory.name).call()
     }
 
-    fun printStatus() {
-        val status = git.status().call()
-
-        status.added.forEach {
-            println("追加: $it")
-        }
-        status.changed.forEach {
-            println("変更: $it")
-        }
-        status.removed.forEach {
-            println("削除: $it")
-        }
-    }
+    fun getChangeLists() = git.getChangeLists()
 
     fun update() = git.update()
 }

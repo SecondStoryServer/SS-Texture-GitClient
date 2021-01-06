@@ -12,7 +12,15 @@ fun main() {
     updateOrInit()
     TextureProjects.projects.forEach(Texture::addToGit)
     TextureProjects.projects.forEach(Texture::makeZip)
-    GitClient.printStatus()
+    val changeLists = GitClient.getChangeLists()
+    println("Single")
+    changeLists.single.forEach {
+        println("- ${it.status} ${it.file}")
+    }
+    println("Pair")
+    changeLists.pairModelTexture.forEach {
+        println("- ${it.json.status} ${it.json.file} / ${it.png.status} ${it.png.file}")
+    }
 }
 
 fun updateOrInit() {
