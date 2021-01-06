@@ -13,16 +13,30 @@ enum class Status {
     Remove
 }
 
-class ChangeLists(val single: List<ChangeFile.SingleFile>, val pairModelTexture: List<ChangeFile.PairModelTexture>) {
-    companion object {
-        fun build(action: Builder.() -> Unit) = Builder().apply(action).build()
-    }
+object ChangeListsPerProject {
+    fun build(action: Builder.() -> Unit) = Builder().apply(action).build()
 
+    class Builder {
+        private val projects = mutableMapOf<String, ChangeLists.Builder>()
+
+        fun add(status: Status, files: Set<String>) {
+            files.groupBy { it.substringBefore('/') }.forEach { (project, list) ->
+                projects.getOrPut(project) { ChangeLists.Builder() }.add(status, list)
+            }
+        }
+
+        fun sort() = projects.values.forEach(ChangeLists.Builder::sort)
+
+        fun build() = projects.mapValues { it.value.build() }
+    }
+}
+
+class ChangeLists(val single: List<ChangeFile.SingleFile>, val pairModelTexture: List<ChangeFile.PairModelTexture>) {
     class Builder {
         private val singleFiles = mutableMapOf<String, ChangeFile.SingleFile>()
         private val pairModelTextures = mutableListOf<ChangeFile.PairModelTexture>()
 
-        fun add(status: Status, files: Set<String>) {
+        fun add(status: Status, files: List<String>) {
             singleFiles.putAll(files.associateWith { ChangeFile.SingleFile(status, it) })
         }
 
@@ -42,9 +56,9 @@ class ChangeLists(val single: List<ChangeFile.SingleFile>, val pairModelTexture:
     }
 }
 
-fun Git.getChangeLists(): ChangeLists {
+fun Git.getChangeLists(): Map<String, ChangeLists> {
     val status = status().call()
-    return ChangeLists.build {
+    return ChangeListsPerProject.build {
         add(Status.Add, status.added)
         add(Status.Change, status.changed)
         add(Status.Remove, status.removed)

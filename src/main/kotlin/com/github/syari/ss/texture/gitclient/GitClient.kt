@@ -10,7 +10,7 @@ object GitClient {
         git.add().addFilepattern(directory.name).call()
     }
 
-    fun getChangeLists() = git.getChangeLists()
+    fun getChangeLists(): Map<String, ChangeLists> = git.getChangeLists()
 
     fun update() = git.update()
 }
