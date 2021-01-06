@@ -13,5 +13,6 @@ fun main() {
 }
 
 fun updateOrInit() {
-    GitClient.update()
+    val result = GitClient.update()
+    Logger.info(result.message)
 }
