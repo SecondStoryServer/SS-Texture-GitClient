@@ -4,7 +4,7 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 9
+const val Version = 10
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
@@ -27,8 +27,13 @@ fun main() {
         TextureProjects.projects.filter { changeLists.keys.contains(it.directory.name) }.forEach(Texture::makeZip)
         GitClient.addDirectory(Texture.zipsFolder)
         print("Commit Message: ")
-        val commitMessage = readLine() ?: return Logger.warning("Failure Commit")
-        GitClient.commit(commitMessage)
+        val commitMessage = readLine() ?: return Logger.warning("Failure Commit: No Commit Message")
+        val user = GitClient.getUserConfig()
+        print("Author Name: (${user.authorName})")
+        val authorName = readLine() ?: user.authorName
+        print("Author Email: (${user.authorEmail})")
+        val authorEmail = readLine() ?: user.authorEmail
+        GitClient.commit(commitMessage, authorName, authorEmail)
     } else {
         Logger.info("ChangeList is Empty")
     }
