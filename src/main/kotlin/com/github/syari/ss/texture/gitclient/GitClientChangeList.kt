@@ -1,5 +1,7 @@
 package com.github.syari.ss.texture.gitclient
 
+import kotlin.math.sin
+
 sealed class ChangeFile {
     class SingleFile(val status: Status, val file: String): ChangeFile()
     class PairModelTexture(val json: SingleFile, val png: SingleFile): ChangeFile()
@@ -15,6 +17,8 @@ class ChangeList(val single: List<ChangeFile.SingleFile>, val pairModelTexture: 
     companion object {
         fun build(action: Builder.() -> Unit) = Builder().apply(action).build()
     }
+
+    fun isEmpty() = single.isEmpty() && pairModelTexture.isEmpty()
 
     class Builder {
         private val singleFiles = mutableMapOf<String, ChangeFile.SingleFile>()
