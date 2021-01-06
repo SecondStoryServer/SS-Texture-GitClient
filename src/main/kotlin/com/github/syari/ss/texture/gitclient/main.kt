@@ -4,13 +4,14 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 14
+const val Version = 15
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
     updateOrInit()
     GitClient.clearChangeList()
+    var commitCount = 0
     TextureProjects.projects.forEach { texture ->
         texture.addToGit()
         val changeList = texture.getChangeList()
@@ -42,6 +43,15 @@ fun main() {
         print("Author Email: (${user.authorEmail})")
         val authorEmail = readLine()?.ifBlank { null } ?: user.authorEmail
         GitClient.commit("${texture.name}: $commitMessage", authorName, authorEmail)
+        commitCount ++
+    }
+    Logger.info("Committed $commitCount")
+    if (commitCount != 0) {
+        print("GitHub UserName: ")
+        val authorName = readLine() ?: return Logger.warning("Push Failure")
+        print("GitHub Password: (Hidden)")
+        val authorEmail = System.console().readPassword("")?.joinToString("") ?: return Logger.warning("Push Failure")
+        GitClient.push(authorName, authorEmail)
     }
 }
 
