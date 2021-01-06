@@ -4,14 +4,14 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 6
+const val Version = 8
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
     updateOrInit()
     TextureProjects.projects.forEach(Texture::addToGit)
-    val changeLists = GitClient.getChangeLists()
+    val changeLists = GitClient.getChangeLists().filterKeys { it != Texture.zipsFolder.name }
     changeLists.forEach { (project, list) ->
         println(project)
         println("  Single")
@@ -24,6 +24,7 @@ fun main() {
         }
     }
     TextureProjects.projects.filter { changeLists.keys.contains(it.directory.name) }.forEach(Texture::makeZip)
+    GitClient.addDirectory(Texture.zipsFolder)
 }
 
 fun updateOrInit() {

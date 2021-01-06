@@ -6,7 +6,7 @@ class Texture(val directory: File) {
     companion object {
         private const val PackMcMeta = "pack.mcmeta"
 
-        private val zipsFolder = File("minimum")
+        val zipsFolder = File("minimum")
 
         fun getZipOutput(texture: Texture): File {
             if (zipsFolder.exists().not()) {
