@@ -13,4 +13,8 @@ object GitClient {
     fun getChangeLists(): Map<String, ChangeLists> = git.getChangeLists()
 
     fun update() = git.update()
+
+    fun commit(message: String) {
+        git.commit().setMessage(message).setSign(false).call()
+    }
 }

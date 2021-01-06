@@ -4,7 +4,7 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 8
+const val Version = 9
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
@@ -23,8 +23,15 @@ fun main() {
             println("  - ${it.json.status} ${it.json.file} / ${it.png.status} ${it.png.file}")
         }
     }
-    TextureProjects.projects.filter { changeLists.keys.contains(it.directory.name) }.forEach(Texture::makeZip)
-    GitClient.addDirectory(Texture.zipsFolder)
+    if (changeLists.isNotEmpty()) {
+        TextureProjects.projects.filter { changeLists.keys.contains(it.directory.name) }.forEach(Texture::makeZip)
+        GitClient.addDirectory(Texture.zipsFolder)
+        print("Commit Message: ")
+        val commitMessage = readLine() ?: return Logger.warning("Failure Commit")
+        GitClient.commit(commitMessage)
+    } else {
+        Logger.info("ChangeList is Empty")
+    }
 }
 
 fun updateOrInit() {
