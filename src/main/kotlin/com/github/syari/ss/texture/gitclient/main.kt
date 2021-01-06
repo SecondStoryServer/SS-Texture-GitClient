@@ -4,14 +4,13 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 5
+const val Version = 6
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
     updateOrInit()
     TextureProjects.projects.forEach(Texture::addToGit)
-    TextureProjects.projects.forEach(Texture::makeZip)
     val changeLists = GitClient.getChangeLists()
     changeLists.forEach { (project, list) ->
         println(project)
@@ -24,6 +23,7 @@ fun main() {
             println("  - ${it.json.status} ${it.json.file} / ${it.png.status} ${it.png.file}")
         }
     }
+    TextureProjects.projects.filter { changeLists.keys.contains(it.directory.name) }.forEach(Texture::makeZip)
 }
 
 fun updateOrInit() {
