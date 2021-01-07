@@ -1,22 +1,17 @@
 package com.github.syari.ss.texture.gitclient
 
 import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.api.ResetCommand
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.lib.UserConfig
-import org.eclipse.jgit.transport.URIish
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
-import java.nio.file.Files
-import kotlin.system.exitProcess
 
 object GitClient {
     val git: Git
 
     init {
-        val cloneUrl = "https://github.com/SecondStoryServer/SS-Texture"
         if (File(TextureProjects.directory, Constants.DOT_GIT).exists().not()) {
-            val clone = Git.cloneRepository().setURI(cloneUrl).call()
+            val clone = Git.cloneRepository().setURI(RemoteURL).call()
             val cloneDirectory = clone.repository.directory.parentFile
             cloneDirectory.listFiles()?.forEach {
                 val destFile = File(TextureProjects.directory, it.name)
