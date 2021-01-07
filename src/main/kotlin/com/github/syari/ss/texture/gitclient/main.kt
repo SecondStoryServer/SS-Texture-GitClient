@@ -1,17 +1,16 @@
 package com.github.syari.ss.texture.gitclient
 
-import java.util.logging.Logger
-import java.util.logging.Logger.getLogger
+import org.apache.log4j.Logger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 19
+const val Version = 20
 const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
-val Logger: Logger = getLogger(ProjectName)
+val logger: Logger = Logger.getLogger(ProjectName)
 
 fun main() {
-    Logger.info("Hello!! $ProjectName v$Version")
+    logger.info("Hello!! $ProjectName v$Version")
     val result = GitClient.update()
-    Logger.info(result.message)
+    logger.info(result.message)
     GitClient.clearChangeList()
     var commitCount = 0
     TextureProjects.projects.forEach { texture ->
@@ -35,7 +34,7 @@ fun main() {
         print("Commit Message: ")
         val commitMessage = readLine()
         if (commitMessage.isNullOrEmpty()) {
-            Logger.info("Ignore Project")
+            logger.info("Ignore Project")
             GitClient.clearChangeList(texture)
             return@forEach
         }
@@ -47,12 +46,12 @@ fun main() {
         GitClient.commit("${texture.name}: $commitMessage", authorName, authorEmail)
         commitCount ++
     }
-    Logger.info("Committed $commitCount")
+    logger.info("Committed $commitCount")
     if (commitCount != 0) {
         print("GitHub UserName: ")
-        val authorName = readLine() ?: return Logger.warning("Push Failure")
+        val authorName = readLine() ?: return logger.warn("Push Failure")
         print("GitHub Password: (Hidden)")
-        val authorEmail = System.console().readPassword("")?.joinToString("") ?: return Logger.warning("Push Failure")
+        val authorEmail = System.console().readPassword("")?.joinToString("") ?: return logger.warn("Push Failure")
         GitClient.push(authorName, authorEmail)
     }
 }
