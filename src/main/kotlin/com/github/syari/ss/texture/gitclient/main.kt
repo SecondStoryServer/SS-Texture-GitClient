@@ -4,13 +4,14 @@ import java.util.logging.Logger
 import java.util.logging.Logger.getLogger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 16
+const val Version = 17
 const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
 val Logger: Logger = getLogger(ProjectName)
 
 fun main() {
     Logger.info("Hello!! $ProjectName v$Version")
-    updateOrInit()
+    val result = GitClient.update()
+    Logger.info(result.message)
     GitClient.clearChangeList()
     var commitCount = 0
     TextureProjects.projects.forEach { texture ->
@@ -54,9 +55,4 @@ fun main() {
         val authorEmail = System.console().readPassword("")?.joinToString("") ?: return Logger.warning("Push Failure")
         GitClient.push(authorName, authorEmail)
     }
-}
-
-fun updateOrInit() {
-    val result = GitClient.update()
-    Logger.info(result.message)
 }
