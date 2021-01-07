@@ -16,6 +16,7 @@ private fun ZipOutputStream.addFiles(files: Array<File>, parent: String = "") {
     files.forEach { file ->
         val path = parent + file.name
         if (file.isFile) {
+            if (file.name == ".DS_Store") return@forEach
             FileInputStream(file).use { inputStream ->
                 putNextEntry(ZipEntry(path))
                 if (file.extension.equals("json", true)) {
