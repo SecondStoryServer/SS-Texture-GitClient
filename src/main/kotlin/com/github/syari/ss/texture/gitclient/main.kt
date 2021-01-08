@@ -3,7 +3,7 @@ package com.github.syari.ss.texture.gitclient
 import org.apache.log4j.Logger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 20
+const val Version = 21
 const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
 val logger: Logger = Logger.getLogger(ProjectName)
 
@@ -11,6 +11,26 @@ fun main() {
     logger.info("Hello!! $ProjectName v$Version")
     val result = GitClient.update()
     logger.info(result.message)
+    UserSetting.run {
+        load()
+        commitAuthorName.ifEmpty {
+            print("commitAuthorName: ")
+            commitAuthorName = readLine().orEmpty()
+        }
+        commitAuthorEmail.ifEmpty {
+            print("commitAuthorEmail: ")
+            commitAuthorEmail = readLine().orEmpty()
+        }
+        remoteUserName.ifEmpty {
+            print("remoteUserName: ")
+            remoteUserName = readLine().orEmpty()
+        }
+        remotePassword.ifEmpty {
+            print("remotePassword: ")
+            remotePassword = readLine().orEmpty()
+        }
+        save()
+    }
     GitClient.clearChangeList()
     var commitCount = 0
     TextureProjects.projects.forEach { texture ->
@@ -38,20 +58,11 @@ fun main() {
             GitClient.clearChangeList(texture)
             return@forEach
         }
-        val user = GitClient.getUserConfig()
-        print("Author Name: (${user.authorName})")
-        val authorName = readLine()?.ifBlank { null } ?: user.authorName
-        print("Author Email: (${user.authorEmail})")
-        val authorEmail = readLine()?.ifBlank { null } ?: user.authorEmail
-        GitClient.commit("${texture.name}: $commitMessage", authorName, authorEmail)
+        GitClient.commit("${texture.name}: $commitMessage", UserSetting.commitAuthorName, UserSetting.commitAuthorEmail)
         commitCount ++
     }
     logger.info("Committed $commitCount")
     if (commitCount != 0) {
-        print("GitHub UserName: ")
-        val authorName = readLine() ?: return logger.warn("Push Failure")
-        print("GitHub Password: (Hidden)")
-        val authorEmail = System.console().readPassword("")?.joinToString("") ?: return logger.warn("Push Failure")
-        GitClient.push(authorName, authorEmail)
+        GitClient.push(UserSetting.remoteUserName, UserSetting.remotePassword)
     }
 }

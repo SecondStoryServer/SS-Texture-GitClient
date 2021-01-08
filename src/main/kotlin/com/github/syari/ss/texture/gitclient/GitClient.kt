@@ -38,8 +38,6 @@ object GitClient {
         git.reset().addPath(texture.name).call()
     }
 
-    fun getUserConfig(): UserConfig = git.repository.config.get(UserConfig.KEY)
-
     fun commit(message: String, authorName: String, authorEmail: String) {
         git.commit().setMessage(message).setAuthor(authorName, authorEmail).setSign(false).call()
     }
