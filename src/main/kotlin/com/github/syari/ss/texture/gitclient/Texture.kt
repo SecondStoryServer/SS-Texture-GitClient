@@ -25,7 +25,7 @@ class Texture(val directory: File) {
     }
 
     fun getChangeList(): ChangeList {
-        val status = GitClient.git.status().call()
+        val status = GitClient.git.status()
         return ChangeList.build {
             add(Status.Add, status.added)
             add(Status.Change, status.changed)

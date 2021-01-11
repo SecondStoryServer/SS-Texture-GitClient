@@ -1,13 +1,13 @@
 package com.github.syari.ss.texture.gitclient
 
+import com.github.syari.kgit.KGit
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.Constants
-import org.eclipse.jgit.lib.UserConfig
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
 
 object GitClient {
-    val git: Git
+    val git: KGit
 
     init {
         if (File(TextureProjects.directory, Constants.DOT_GIT).exists().not()) {
@@ -21,29 +21,39 @@ object GitClient {
             }
             cloneDirectory.deleteRecursively()
         }
-        git = Git.open(TextureProjects.directory)
+        git = KGit.open(TextureProjects.directory)
     }
 
     fun add(file: File) {
-        git.add().addFilepattern(file.path.removePrefix("./")).call()
+        git.add {
+            addFilepattern(file.path.removePrefix("./"))
+        }
     }
 
     fun update() = git.update()
 
     fun clearChangeList() {
-        git.reset().call()
+        git.reset()
     }
 
     fun clearChangeList(texture: Texture) {
-        git.reset().addPath(texture.name).call()
+        git.reset {
+            addPath(texture.name)
+        }
     }
 
     fun commit(message: String, authorName: String, authorEmail: String) {
-        git.commit().setMessage(message).setAuthor(authorName, authorEmail).setSign(false).call()
+        git.commit {
+            this.message = message
+            setAuthor(authorName, authorEmail)
+            setSign(false)
+        }
     }
 
     fun push(userName: String, password: String) {
         val credentialsProvider = UsernamePasswordCredentialsProvider(userName, password)
-        git.push().setCredentialsProvider(credentialsProvider).call()
+        git.push {
+            setCredentialsProvider(credentialsProvider)
+        }
     }
 }

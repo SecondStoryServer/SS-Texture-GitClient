@@ -1,7 +1,5 @@
 package com.github.syari.ss.texture.gitclient
 
-import kotlin.math.sin
-
 sealed class ChangeFile {
     class SingleFile(val status: Status, val file: String): ChangeFile()
     class PairModelTexture(val json: SingleFile, val png: SingleFile): ChangeFile()

@@ -3,7 +3,7 @@ package com.github.syari.ss.texture.gitclient
 import org.apache.log4j.Logger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 21
+const val Version = 22
 const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
 val logger: Logger = Logger.getLogger(ProjectName)
 

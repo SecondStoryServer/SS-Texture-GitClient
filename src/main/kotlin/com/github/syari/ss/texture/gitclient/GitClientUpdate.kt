@@ -1,6 +1,6 @@
 package com.github.syari.ss.texture.gitclient
 
-import org.eclipse.jgit.api.Git
+import com.github.syari.kgit.KGit
 import org.eclipse.jgit.lib.Constants
 
 sealed class UpdateResult(val message: String) {
@@ -10,9 +10,9 @@ sealed class UpdateResult(val message: String) {
     class FailPull(message: String): UpdateResult(message)
 }
 
-fun Git.update(): UpdateResult {
+fun KGit.update(): UpdateResult {
     val lastHead = repository.resolve(Constants.HEAD)
-    val pullResult = pull().call()
+    val pullResult = pull()
     return if (pullResult.isSuccessful) {
         val mergeResult = pullResult.mergeResult
         val conflicts = mergeResult.conflicts

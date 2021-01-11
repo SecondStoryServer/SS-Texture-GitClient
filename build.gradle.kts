@@ -11,12 +11,12 @@ group = "com.github.syari.ss.texture.gitclient"
 
 repositories {
     mavenCentral()
-    maven("https://repo.eclipse.org/content/groups/releases/")
+    maven(url = "https://dl.bintray.com/sya-ri/maven/")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.eclipse.jgit:org.eclipse.jgit:5.10.0.202012080955-r")
+    implementation("com.github.syari:kgit:1.0.0")
     implementation("org.slf4j:slf4j-log4j12:1.7.21")
 }
 
