@@ -11,7 +11,7 @@ group = "com.github.syari.ss.texture.gitclient"
 
 repositories {
     mavenCentral()
-    maven(url = "https://dl.bintray.com/sya-ri/maven/")
+    jcenter()
 }
 
 dependencies {
