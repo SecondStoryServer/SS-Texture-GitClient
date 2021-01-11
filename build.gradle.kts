@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.github.syari:kgit:1.0.0")
+    implementation("com.github.syari:kgit:1.0.1")
     implementation("org.slf4j:slf4j-log4j12:1.7.21")
 }
 
