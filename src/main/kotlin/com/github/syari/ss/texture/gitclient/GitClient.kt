@@ -13,6 +13,7 @@ object GitClient {
         if (File(TextureProjects.directory, Constants.DOT_GIT).exists().not()) {
             val clone = Git.cloneRepository().setURI(RemoteURL).call()
             val cloneDirectory = clone.repository.directory.parentFile
+            clone.close()
             cloneDirectory.listFiles()?.forEach {
                 val destFile = File(TextureProjects.directory, it.name)
                 if (destFile.exists().not()) {
