@@ -27,7 +27,7 @@ object GitClient {
 
     fun add(file: File) {
         git.add {
-            addFilepattern(file.path.removePrefix("./"))
+            addFilepattern(file.toRelativeString(TextureProjects.directory))
         }
     }
 
