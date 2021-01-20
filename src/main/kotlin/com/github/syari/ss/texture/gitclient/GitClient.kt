@@ -27,6 +27,7 @@ object GitClient {
         git.commit {
             this.message = message
             setAuthor(authorName, authorEmail)
+            setCommitter(authorName, authorEmail)
             setSign(false)
         }
     }
