@@ -1,37 +1,17 @@
 package com.github.syari.ss.texture.gitclient
 
 import com.github.syari.kgit.KGit
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
 
 object GitClient {
-    val git: KGit
-
-    init {
-        if (File(TextureProjects.directory, Constants.DOT_GIT).exists().not()) {
-            val clone = Git.cloneRepository().setURI(RemoteURL).call()
-            val cloneDirectory = clone.repository.directory.parentFile
-            clone.close()
-            cloneDirectory.listFiles()?.forEach {
-                val destFile = File(TextureProjects.directory, it.name)
-                if (destFile.exists().not()) {
-                    it.renameTo(destFile)
-                }
-            }
-            cloneDirectory.deleteRecursively()
-        }
-        git = KGit.open(TextureProjects.directory)
-    }
+    val git = KGit.open(TextureProjects.directory)
 
     fun add(file: File) {
         git.add {
             addFilepattern(file.toRelativeString(TextureProjects.directory))
         }
     }
-
-    fun update() = git.update()
 
     fun clearChangeList() {
         git.reset()

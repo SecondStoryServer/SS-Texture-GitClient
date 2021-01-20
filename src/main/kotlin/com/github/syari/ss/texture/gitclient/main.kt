@@ -3,14 +3,13 @@ package com.github.syari.ss.texture.gitclient
 import org.apache.log4j.Logger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 22
+const val Version = 23
 const val RemoteURL = "https://github.com/SecondStoryServer/SS-Texture"
 val logger: Logger = Logger.getLogger(ProjectName)
 
 fun main() {
     logger.info("Hello!! $ProjectName v$Version")
-    val result = GitClient.update()
-    logger.info(result.message)
+    checkUpdate()
     UserSetting.run {
         load()
         commitAuthorName.ifEmpty {
