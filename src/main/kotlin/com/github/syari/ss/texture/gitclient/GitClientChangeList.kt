@@ -1,8 +1,8 @@
 package com.github.syari.ss.texture.gitclient
 
 sealed class ChangeFile {
-    class SingleFile(val status: Status, val file: String): ChangeFile()
-    class PairModelTexture(val json: SingleFile, val png: SingleFile): ChangeFile()
+    class SingleFile(val status: Status, val file: String) : ChangeFile()
+    class PairModelTexture(val json: SingleFile, val png: SingleFile) : ChangeFile()
 }
 
 enum class Status {

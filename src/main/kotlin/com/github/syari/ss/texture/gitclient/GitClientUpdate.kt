@@ -4,10 +4,10 @@ import com.github.syari.kgit.KGit
 import org.eclipse.jgit.lib.Constants
 
 sealed class UpdateResult(val message: String) {
-    class Success(message: String): UpdateResult(message)
-    class NoChange(message: String): UpdateResult(message)
-    class Conflict(message: String): UpdateResult(message)
-    class FailPull(message: String): UpdateResult(message)
+    class Success(message: String) : UpdateResult(message)
+    class NoChange(message: String) : UpdateResult(message)
+    class Conflict(message: String) : UpdateResult(message)
+    class FailPull(message: String) : UpdateResult(message)
 }
 
 fun KGit.update(): UpdateResult {

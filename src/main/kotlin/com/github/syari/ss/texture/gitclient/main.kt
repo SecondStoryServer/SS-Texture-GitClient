@@ -37,11 +37,13 @@ fun main() {
         texture.addToGit()
         val changeList = texture.getChangeList()
         if (changeList.isEmpty()) return@forEach
-        println("""
+        println(
+            """
             
             *** ${texture.name} ***
 
-        """.trimIndent())
+            """.trimIndent()
+        )
         println("Single")
         changeList.single.forEach {
             println("- ${it.status} ${it.file}")
