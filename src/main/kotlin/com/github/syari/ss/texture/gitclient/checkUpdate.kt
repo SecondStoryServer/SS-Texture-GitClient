@@ -21,6 +21,6 @@ private fun cloneRepository() {
         setURI(TextureSetting.remoteUrl)
         setDirectory(File(".clone_tmp"))
     }
-    logger.info("Download update(s). Please re-execute.")
+    println("Download update(s). Please re-execute.")
     exitProcess(0)
 }

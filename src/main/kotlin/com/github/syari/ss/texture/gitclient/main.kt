@@ -1,14 +1,12 @@
 package com.github.syari.ss.texture.gitclient
 
 import com.github.syari.ss.texture.gitclient.setting.UserSetting
-import org.apache.log4j.Logger
 
 const val ProjectName = "SS-Texture-GitClient"
-const val Version = 26
-val logger: Logger = Logger.getLogger(ProjectName)
+const val Version = 27
 
 fun main() {
-    logger.info("Hello!! $ProjectName v$Version")
+    println("Hello!! $ProjectName v$Version")
     checkUpdate()
     UserSetting.run {
         commitAuthorName.ifEmpty {
