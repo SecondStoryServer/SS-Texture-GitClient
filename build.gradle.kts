@@ -6,7 +6,6 @@ plugins {
     kotlin("jvm") version "1.4.21"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    application
 }
 
 group = "com.github.syari.ss.texture.gitclient"
@@ -27,13 +26,12 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<ShadowJar> {
-    baseName = "git"
-    classifier = null
+    archiveBaseName.set("git")
+    archiveClassifier.set("")
     destinationDirectory.set(file("../"))
-}
-
-application {
-    mainClassName = "$group.MainKt"
+    manifest {
+        attributes["Main-Class"] = "${project.group}.MainKt"
+    }
 }
 
 configure<KtlintExtension> {
