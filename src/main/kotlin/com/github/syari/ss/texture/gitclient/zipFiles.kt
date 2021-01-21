@@ -6,7 +6,19 @@ import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-fun zipFiles(directory: File, output: File) {
+private val zipOutput: File
+    get() {
+        if (TextureSetting.zipDirectory.exists().not()) {
+            TextureSetting.zipDirectory.mkdir()
+        }
+        return File(TextureSetting.zipDirectory, TextureSetting.name + ".zip")
+    }
+
+fun makeZip() = zipOutput.apply {
+    zipFiles(TextureSetting.textureDirectory, this)
+}
+
+private fun zipFiles(directory: File, output: File) {
     ZipOutputStream(FileOutputStream(output)).use {
         it.addFiles(directory.listFiles()!!)
     }

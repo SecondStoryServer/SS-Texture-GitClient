@@ -6,10 +6,10 @@ import java.io.File
 import kotlin.system.exitProcess
 
 fun checkUpdate() {
-    if (File(TextureProjects.directory, Constants.DOT_GIT).exists().not()) {
+    if (File(Constants.DOT_GIT).exists().not()) {
         cloneRepository()
     } else {
-        val fetchResult = GitClient.git.fetch()
+        val fetchResult = GitClient.api.fetch()
         if (fetchResult.trackingRefUpdates.isNotEmpty()) {
             cloneRepository()
         }
@@ -18,7 +18,7 @@ fun checkUpdate() {
 
 private fun cloneRepository() {
     KGit.cloneRepository {
-        setURI(RemoteURL)
+        setURI(TextureSetting.remoteUrl)
         setDirectory(File(".clone_tmp"))
     }
     logger.info("Download update(s). Please re-execute.")

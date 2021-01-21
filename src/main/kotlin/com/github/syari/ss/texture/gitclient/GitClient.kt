@@ -5,27 +5,13 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import java.io.File
 
 object GitClient {
-    val git = KGit.open(TextureProjects.directory)
-
-    fun add(file: File) {
-        git.add {
-            addFilepattern(file.toRelativeString(TextureProjects.directory))
-        }
-    }
-
-    fun clearChangeList() {
-        git.reset()
-    }
-
-    fun clearChangeList(texture: Texture) {
-        git.reset {
-            addPath(texture.name)
-        }
-    }
+    val api = KGit.open(File("."))
 
     fun commit(message: String, authorName: String, authorEmail: String) {
-        git.commit {
+        api.commit {
             this.message = message
+            setAll(true)
+            setAllowEmpty(false)
             setAuthor(authorName, authorEmail)
             setCommitter(authorName, authorEmail)
             setSign(false)
@@ -34,7 +20,7 @@ object GitClient {
 
     fun push(userName: String, password: String) {
         val credentialsProvider = UsernamePasswordCredentialsProvider(userName, password)
-        git.push {
+        api.push {
             setCredentialsProvider(credentialsProvider)
         }
     }
