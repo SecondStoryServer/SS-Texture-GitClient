@@ -8,6 +8,9 @@ object GitClient {
     val api = KGit.open(File("."))
 
     fun commit(message: String, authorName: String, authorEmail: String) {
+        api.add {
+            addFilepattern(".")
+        }
         api.commit {
             this.message = message
             setAll(true)
