@@ -12,12 +12,11 @@ group = "com.github.syari.ss.texture.gitclient"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.github.syari:kgit:1.0.1")
+    implementation("com.github.sya-ri:kgit:1.0.3")
     implementation("org.slf4j:slf4j-log4j12:1.7.21")
 }
 
