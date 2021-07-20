@@ -17,7 +17,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.github.sya-ri:kgit:1.0.3")
-    implementation("org.slf4j:slf4j-log4j12:1.7.21")
+    implementation("org.slf4j:slf4j-log4j12:1.7.32")
 }
 
 tasks.withType<KotlinCompile> {
