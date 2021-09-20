@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.5.31"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
