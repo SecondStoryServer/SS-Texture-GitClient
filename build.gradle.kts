@@ -4,7 +4,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
     kotlin("jvm") version "1.4.21"
-    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
